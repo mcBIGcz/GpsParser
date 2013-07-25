@@ -9,8 +9,9 @@ namespace Bakalarka
         public static bool TryParseCoord(String coord, out double value)
         {
             string[] separator = new string[] { " " };
-            string decimalPoint = coord.Replace(',', '.');
-            String[] parts = decimalPoint.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            string replaced = coord.Replace(',', '.').Replace('°', ' ').Replace('\'', ' ')
+                .Replace('"', ' ').Replace('N', ' ').Replace('E', ' ');
+            String[] parts = replaced.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
             try
             {
@@ -42,14 +43,14 @@ namespace Bakalarka
 
         private static double parseDFormat(String[] parts)
         {
-            String value = parts[0].Replace("°", "");
+            String value = parts[0];
             return XmlConvert.ToDouble(value);
         }
 
         private static double parseDMFormat(String[] parts)
         {
-            String valueD = parts[0].Replace("°", "");
-            String valueM = parts[1].Replace("'", "");
+            String valueD = parts[0];
+            String valueM = parts[1];
 
 
             double retVal = 0;
@@ -66,9 +67,9 @@ namespace Bakalarka
 
         private static double parseDMSFormat(String[] parts)
         {
-            String valueD = parts[0].Replace("°", "");
-            String valueM = parts[1].Replace("'", "");
-            String valueS = parts[2].Replace("\"", "");
+            String valueD = parts[0];
+            String valueM = parts[1];
+            String valueS = parts[2];
 
 
             double retVal = 0;
